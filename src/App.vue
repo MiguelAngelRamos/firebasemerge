@@ -1,11 +1,26 @@
 <template>
   <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/" v-if="existeUsuario">Inicio</router-link> |
+    <router-link to="/registro" v-if="!existeUsuario">Registro</router-link> |
+    <router-link to="/login" v-if="!existeUsuario">Login</router-link> |
+    <button @click="cerrarSesion" class="btn btn-sm btn-secondary" v-if="existeUsuario">Cerrar sesión</button>
   </nav>
+
   <router-view/>
 </template>
 
+<script>
+  import { mapActions, mapGetters } from 'vuex';
+
+  export default {
+    methods: {
+      ...mapActions(['cerrarSesion'])
+    },
+    computed: {
+      ...mapGetters(['existeUsuario'])
+    }
+  }
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
